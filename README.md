@@ -20,6 +20,8 @@ To install dependencies, run something like `python3 -m pip3 install -r requirem
 
 To start the server, run something like `python3 -m gunicorn -w 4 -b 0.0.0.0:4000 server:app --timeout 400`
 
+You can add a user in a shell with `add_user.py`.
+
 The API_HOST is an enviroment variable which can be passed as a .env if needed. This defaults to localhost:8000.
 
 The REDIRECT_URL is used to generate redirect messages, and should be something like "http://special-server.com/login.html"

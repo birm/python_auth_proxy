@@ -22,6 +22,8 @@ To start the server, run something like `python3 -m gunicorn -w 4 -b 0.0.0.0:400
 
 The API_HOST is an enviroment variable which can be passed as a .env if needed. This defaults to localhost:8000.
 
+The REDIRECT_URL is used to generate redirect messages, and should be something like "http://special-server.com/login.html"
+
 I've added a Dockerfile for convenience, but this may have unintended consequences, as each worker in a k8s environment may generate different keys. Configure carefully.
 
 Using a python virtualenv is probably fine.

@@ -1,7 +1,7 @@
 from dotenv import load_dotenv  # pip package python-dotenv
 import os
 import flask
-from flask import request, Response, make_response, jsonify
+from flask import request, Response, make_response, jsonify, redirect
 from functools import wraps
 import requests
 import jwt
@@ -14,6 +14,7 @@ app = flask.Flask(__name__)
 
 load_dotenv()
 API_HOST = os.environ.get('API_HOST', "http://localhost:8000")
+REDIRECT_URL = os.environ.get('REDIRECT_URL', "http://localhost:4000/login.html")
 
 # encode/decode default to utf-8, FYI
 
@@ -80,13 +81,13 @@ def token_required(f):
             except jwt.exceptions.InvalidTokenError as e:
                 # if token is bad, don't route
                 print(repr(e))
-                return make_response(jsonify({"message": "Invalid token!", "error": repr(e)}), 401)
-                # TODO redirect instead
+                # return make_response(jsonify({"message": "Invalid token!", "error": repr(e)}), 401)
+                return redirect(REDIRECT_URL, code=401)
             return f(*args, **kwargs)
         else:
-            # if token is missing don't route, but explain how this works
-            return make_response(jsonify({"message": "Token from ./login expected in cookie with name token"}), 401)
-            # TODO redirect instead
+            # if token is missing don't route
+            # return make_response(jsonify({"message": "Token from ./login expected in cookie with name token"}), 401)
+            return redirect(REDIRECT_URL, code=401)
     return decorator
 
 @app.route('/handlelogin', methods=['GET', 'POST'])

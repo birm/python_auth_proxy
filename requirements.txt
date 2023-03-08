@@ -1,0 +1,9 @@
+flask
+flask-cors
+gunicorn
+requests
+pyjwt
+pyjwt[crypto]
+python-dotenv
+sqlite3
+bcrypt

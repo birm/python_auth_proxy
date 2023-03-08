@@ -5,5 +5,4 @@ requests
 pyjwt
 pyjwt[crypto]
 python-dotenv
-sqlite3
 bcrypt

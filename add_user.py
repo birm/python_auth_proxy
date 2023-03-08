@@ -1,8 +1,20 @@
 import sqlite3
 import bcrypt
+import getpass
 
-username = "something"
-password = "something else"
+user = input("Username [%s]: " % getpass.getuser())
+if not user:
+    user = getpass.getuser()
+
+pprompt = lambda: (getpass.getpass(), getpass.getpass('Retype password: '))
+
+p1, p2 = pprompt()
+while p1 != p2:
+    print('Passwords do not match. Try again')
+    p1, p2 = pprompt()
+
+username = user
+password = p1
 
 salt = bcrypt.gensalt()
 hashed = bcrypt.hashpw(str.encode(password), salt)

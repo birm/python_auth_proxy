@@ -1,11 +1,5 @@
 <html>
 <!--EVERYTHING needs to be here or off-server since only routing this one static file-->
-<h1>Monai Proxy Login</h1>
-<label for="username">Username: </label>
-<input type="text" id="username" placeholder="username"></input>
-<label for="password">Password: </label>
-<input type="password" id="password"></input>
-<button onclick="handleLogin()" type="button" id="login">Log in</button>
 
 <script>
   function createCookie(name,value,minutes) {
@@ -23,17 +17,34 @@
     let username = document.getElementById("username").value
     let password = document.getElementById("password").value
     let body = {username: username, password: password}
-    fetch("./login"{
+    fetch("./handlelogin", {
       method: "POST",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify(body)
     }).then(x=>x.json()).then(data=>{
-      createCookie("token", data['token'], 60);
-      // TODO handle a redir path in query params
-      window.location = "./"
+      if (data['token']){
+        createCookie("token", data['token'], 60);
+        // TODO handle a custom redir path in query params
+        window.location = "./ohif/"
+      } else {
+        alert("error")
+      }
     }).catch(e=>{
       console.error(e)
       alert("Login failed")
     })
   }
 </script>
+
+<h1>Monai Proxy Login</h1>
+<label for="username">Username: </label>
+<input type="text" id="username" placeholder="username"></input>
+<label for="password">Password: </label>
+<input type="password" id="password"></input>
+<button onclick="handleLogin()" type="button" id="login">Log in</button>
+
+
 </html>

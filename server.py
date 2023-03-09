@@ -58,9 +58,7 @@ def check_login(username, password):
             un, salt, db_hash = x
             # recompute and compare hash
             hashed = bcrypt.hashpw(str.encode(password), str.encode(salt))
-            print(un, salt, db_hash, hashed)
             if db_hash == hashed.decode():
-                print("returning true")
                 return True
             else:
                 return False
@@ -97,14 +95,12 @@ def loginHandler():
     data = request.get_json()
     username = data.get("username", False)
     password = data.get("password", False)
-    print(username, password)
     ## TODO if login ok
     if (check_login(username, password)):
         # set expiry
         exp = datetime.datetime.now(tz=datetime.timezone.utc) + datetime.timedelta(hours=1)
         # make and return token
         token = jwt.encode({"sub": username, "exp": exp}, private_key, algorithm="RS256")
-        print(token)
         return {"token": token}
     else:
         return {"error": "Invalid login"}

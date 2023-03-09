@@ -18,7 +18,6 @@ password = p1
 
 salt = bcrypt.gensalt()
 hashed = bcrypt.hashpw(str.encode(password), salt)
-print(salt, hashed)
 
 # create sqlite user db if not exists
 user_db = sqlite3.connect("users.db")

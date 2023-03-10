@@ -37,6 +37,7 @@
       alert("Login failed")
     })
   }
+
 </script>
 
 <h1>Monai Proxy Login</h1>
@@ -46,5 +47,20 @@
 <input type="password" id="password"></input>
 <button onclick="handleLogin()" type="button" id="login">Log in</button>
 
+<script>
+// assign enter key on inputs to login
+document.getElementById("username").addEventListener("keypress", function(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    document.getElementById("login").click();
+  }
+});
+document.getElementById("password").addEventListener("keypress", function(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    document.getElementById("login").click();
+  }
+});
+</script>
 
 </html>

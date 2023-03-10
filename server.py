@@ -40,10 +40,10 @@ hash TEXT
 )""")
 user_db.commit()
 
-def get_file(filename):
+def get_file(filename, mode="r"):
     try:
         src = os.path.join(os.path.abspath(os.path.dirname(__file__)), filename)
-        return open(src).read()
+        return open(src, mode).read()
     except IOError as exc:
         return str(exc)
 
@@ -111,6 +111,11 @@ def loginFile():
     content = get_file('login.html')
     return Response(content, mimetype="text/html")
 
+@app.route("/favicon.ico")
+def iconFile():
+    content = get_file('favicon.ico', 'rb')
+    return Response(content, mimetype="image/vnd.microsoft.icon")
+
 
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
@@ -126,4 +131,6 @@ def redirect_to_API_HOST(path):
         allow_redirects = False,
     )
     response = Response(res.content, res.status_code)
+    for h in res.headers:
+        response.headers[h] = res.headers[h]
     return response
